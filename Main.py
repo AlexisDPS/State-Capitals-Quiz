@@ -63,7 +63,7 @@ def ask_question(correct_state, possible_answers):
     If it is, then it converts the input to 0-3 (A=0, B=1, C=2, D=3) and returns the value."""
     # Asks user to choose an option A-D
     answer = input(". The capital of " + correct_state + " is: \n    A. " + possible_answers[0] + "  B. " + possible_answers[1] + "  C. " + possible_answers[2] + "  D. " + possible_answers[3] + "\nEnter selection (A, B, C, or D): ")
-    while answer.upper not in ["A", "B", "C", "D"]:
+    while answer.upper() not in ["A", "B", "C", "D"]:
         answer = input("Invalid input. Input choice A-D.\nEnter selection: ")
     if answer.upper() == "A":
         answer = 0

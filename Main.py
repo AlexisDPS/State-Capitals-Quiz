@@ -8,7 +8,8 @@ import random
 def read_file_to_dict(file_name):
     """Read in each line, separate the state and the capital, and store them as a key:
     value pair in a dictionary. Return the filled dictionary."""
-    lines = file_name.readlines()
+    file = open(file_name, 'r')
+    lines = file.readlines()
 
     state_dictionary = {}
 
@@ -33,7 +34,7 @@ def get_random_choices(states, correct_state):
     """pass in the states
 dictionary and the correct state. Place the correct state into a list and then call
 get_random_state to add three other states to this list. These states should be
-different from the correct state and also different from each other. Using the list of states,
+different from t    he correct state and also different from each other. Using the list of states,
 create a list of capitals, shuffle it, and then return that list. This is the list of possible
 answers that the user will choose from."""
     state_choices = [correct_state]
@@ -62,23 +63,33 @@ def ask_question(correct_state, possible_answers):
     If it is, then convert the input to 0-3 (A=0, B=1, C=2, D=3) and return the value."""
 
     answer = input("What is the capital of " + correct_state + "? \nA. " + possible_answers[0] + "\nB. " + possible_answers[1] + "\nC. " + possible_answers[2] + "\nD. " + possible_answers[3] + "\nEnter your answer (A, B, C, or D): ")
+    if answer not in "ABCDabcd":
+        answer = input("Invalid input. Input choice A-D")
+    if answer.upper() == "A":
+        answer = 0
+    elif answer.upper() == "B":
+        answer = 1
+    elif answer.upper() == "C":
+        answer = 2
+    else:
+        answer = 3
     return answer
 
 def main():
     print("Welcome to the State Capitals Quiz!")
     point = 0
     i = 0
-    states = read_file_to_dict(statecapital.txt)
+    states = read_file_to_dict("statecapitals.txt")
     while(i < 10):
         print("Question " + str(i + 1) + ":")
         # Get a random state from the dictionary
         correct_state = get_random_state(states)
         # Get a list of possible answers
-        possible_answers = get_random_choices(correct_state)
+        possible_answers = get_random_choices(states, correct_state)
         # Ask the question and get the user's answer
         user_answer = ask_question(correct_state, possible_answers)
         # Check if the answer is correct and update points
-        if user_answer == correct_state:
+        if possible_answers[user_answer] == correct_state:
             print("Correct!")
             point += 1
         else:

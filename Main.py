@@ -62,9 +62,9 @@ def ask_question(correct_state, possible_answers):
     then display an 'Invalid' message and repeat until the user enters a valid choice. 
     If it is, then convert the input to 0-3 (A=0, B=1, C=2, D=3) and return the value."""
 
-    answer = input("What is the capital of " + correct_state + "? \nA. " + possible_answers[0] + "\nB. " + possible_answers[1] + "\nC. " + possible_answers[2] + "\nD. " + possible_answers[3] + "\nEnter your answer (A, B, C, or D): ")
-    if answer not in "ABCDabcd":
-        answer = input("Invalid input. Input choice A-D")
+    answer = input(". The capital of " + correct_state + " is: \n    A. " + possible_answers[0] + "  B. " + possible_answers[1] + "  C. " + possible_answers[2] + "  D. " + possible_answers[3] + "\nEnter selection (A, B, C, or D): ")
+    while answer not in "ABCDabcd":
+        answer = input("Invalid input. Input choice A-D.\nEnter selection: ")
     if answer.upper() == "A":
         answer = 0
     elif answer.upper() == "B":
@@ -76,26 +76,26 @@ def ask_question(correct_state, possible_answers):
     return answer
 
 def main():
-    print("Welcome to the State Capitals Quiz!")
+    print("- Welcome to the State Capitals Quiz! -")
     point = 0
     i = 0
     states = read_file_to_dict("statecapitals.txt")
     while(i < 10):
-        print("Question " + str(i + 1) + ":")
-        # Get a random state from the dictionary
+        print(str(i + 1), end = "")
+        # Gets a random state from the dictionary
         correct_state = get_random_state(states)
-        # Get a list of possible answers
+        # Gets a list of possible answers
         possible_answers = get_random_choices(states, correct_state)
-        # Ask the question and get the user's answer
+        # Asks the question and get the user's answer
         user_answer = ask_question(correct_state, possible_answers)
-        # Check if the answer is correct and update points
-        if possible_answers[user_answer] == correct_state:
+        # Checks if the answer is correct and update points
+        if possible_answers[user_answer] == states[correct_state]:
             print("Correct!")
             point += 1
         else:
-            print("Incorrect! The correct answer is: " + correct_state + ".")
+            print("Incorrect! The correct answer is: " + states[correct_state] + ".")
         i += 1
 
 
-    print("End of test. You got " + str(point) + " points.")
+    print("End of test. You got " + str(point) + " correct.")
 main()
